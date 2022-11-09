@@ -114,14 +114,19 @@ const arrIcons = [
 ];
 
 const eleContainer = document.querySelector('.container');
+const eleSelect = document.querySelector('#icons');
 
 for(let i = 0; i < arrIcons.length; i++){
     const eleCard = document.createElement('div');
     eleCard.classList.add('card');
-
+    
     eleCard.innerHTML = `
-    <i class="${arrIcons[i].family} ${arrIcons[i].prefix}${arrIcons[i].name}" style="color: ${arrIcons[i].color}"></i>
+    <i class="${arrIcons[i].family} ${arrIcons[i].prefix}${arrIcons[i].name} ${arrIcons[i].type}" style="color: ${arrIcons[i].color}"></i>
     <div class="text">${arrIcons[i].name}</div>
     `
+
     eleContainer.append(eleCard);
 }
+
+
+
