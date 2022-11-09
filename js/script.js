@@ -120,8 +120,8 @@ for(let i = 0; i < arrIcons.length; i++){
     eleCard.classList.add('card');
 
     eleCard.innerHTML = `
-    <i class='${arrIcons[i].family} ${arrIcons[i].prefix}${arrIcons[i].name}'></i>
-    <div>${arrIcons[i].name}</div>
+    <i class="${arrIcons[i].family} ${arrIcons[i].prefix}${arrIcons[i].name}" style="color: ${arrIcons[i].color}"></i>
+    <div class="text">${arrIcons[i].name}</div>
     `
     eleContainer.append(eleCard);
 }
