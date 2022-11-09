@@ -112,3 +112,16 @@ const arrIcons = [
 		color: 'blue'
 	}
 ];
+
+const eleContainer = document.querySelector('.container');
+
+for(let i = 0; i < arrIcons.length; i++){
+    const eleCard = document.createElement('div');
+    eleCard.classList.add('card');
+
+    eleCard.innerHTML = `
+    <i class='${arrIcons[i].family} ${arrIcons[i].prefix}${arrIcons[i].name}'></i>
+    <div>${arrIcons[i].name}</div>
+    `
+    eleContainer.append(eleCard);
+}
