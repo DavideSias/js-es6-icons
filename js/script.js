@@ -113,53 +113,76 @@ const arrIcons = [
 	}
 ];
 
+//REFACTOR CODICE POST CORREZIONE
+
 function getRandomColor(){
-    let color = Math.floor(Math.random()*16777215).toString(16);
-    return color
+	let color = Math.floor(Math.random()*16777215).toString(16);
+	return color
 }
 
-const arrRandomColors = [];
+function colorChange(arrIcons) {
+	arrIcons.forEach(objIcon => objIcon.color = getRandomColor());
+}
+
+function renderIcons(arrData) {
+	eleContainer.innerHTML = '';
+	for(let i = 0; i < arrData.length; i++){
+		const objIcon = arrData[i];
+		eleContainer.innerHTML += generateCard(objIcon);
+	}
+	// ALTERNATIVA CON forEach 
+	// arrData.forEach(objIcon => eleContainer.innerHTML += generateCard(objIcon));
+};
+
+function generateCard(objData){
+	return `
+		<div class="card">
+			<i class="${objData.family} ${objData.prefix}${objData.name} ${objData.type}" style="color: #${objData.color}"></i>
+			<div class="text">${objData.name}</div>
+		</div>
+	`
+};	
+
+function populateSelect(arrData, eleSelect){
+
+	const arrTypes = [];
+	arrData.forEach(objIcon =>{
+		if(!arrTypes.includes(objIcon.type)){
+			arrTypes.push(objIcon.type);
+		}
+	});
+	
+	// ALTERNATIVA CON L'IF IN RIGA USANDO ? :
+	// arrData.forEach(objIcon => arrTypes.includes(objIcon.type) ? '' : arrTypes.push(objIcon.type));
+
+	arrTypes.forEach(type => eleSelect.innerHTML += `<option value="${type}>${type}</option>`);
+}
+
+function filterIcons() {
+	const selectedType = this.value;
+
+	// filtrare array
+	if(selectedType !== ''){
+		arrIconsFiltered = arrIcons.filter(objIcon => objIcon.type === selectedType)
+	} else {
+		arrIconsFiltered = arrIcons;
+	}
+	
+	// renderizzare array delle icone filtrate
+	renderIcons(arrIconsFiltered, eleContainer);
+}
+	
 
 const eleContainer = document.querySelector('.container');
-const eleSelect = document.querySelector('#icons');
+const eleSelect = document.querySelector('#icons-select');
 
-for(let i = 0; i < arrIcons.length; i++){
+colorChange(arrIcons);
+renderIcons(arrIcons, eleContainer)
+populateSelect(arrIcons, eleSelect);
+eleSelect.addEventListener('change', filterIcons);
 
-    arrRandomColors.push(getRandomColor());
-    console.log(arrRandomColors);
 
-    const eleCard = document.createElement('div');
-    eleCard.classList.add('card');
-    
-    eleCard.innerHTML = `
-    <i class="${arrIcons[i].family} ${arrIcons[i].prefix}${arrIcons[i].name} ${arrIcons[i].type}" style="color: #${arrRandomColors[i]}"></i>
-    <div class="text">${arrIcons[i].name}</div>
-    `
 
-    eleContainer.append(eleCard);
-}
-
-// let listTypeAnimal = document.querySelectorAll('.animal');
-// let listTypeVegetable = document.querySelectorAll('.vegetable');
-// let listTypeUser = document.querySelectorAll('.user');
-// let listTypeAll = document.querySelectorAll('i');
-
-// // console.log(listTypeAnimal);
-// // console.log(listTypeVegetable);
-// // console.log(listTypeUser);
-// // console.log(listTypeAll);
-
-// for(let i = 0; i < listTypeAll.length; i++){
-//     if(eleSelect.value == 'all'){
-//         listTypeAll[i].classList.add('visible');
-//     } else if(eleSelect.value == 'animal'){
-//         listTypeAnimal[i].classList.add('visible');
-//     } else if(eleSelect.value == 'vegetable'){
-//         listTypeVegetable[i].classList.add('visible');
-//     } else {
-//         listTypeUser[i].classList.add('visible');
-//     }
-// }
 
 
 
